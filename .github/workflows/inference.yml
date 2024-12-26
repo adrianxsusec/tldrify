@@ -1,0 +1,26 @@
+name: T5 Inference
+on:
+  workflow_dispatch:
+    inputs:
+      text:
+        description: 'Input text'
+        required: true
+
+jobs:
+  inference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install torch transformers
+
+      - name: Run inference
+        run: |
+          python test_inference.py "${{ github.event.inputs.text }}"
