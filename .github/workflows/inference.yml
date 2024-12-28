@@ -25,4 +25,4 @@ jobs:
 
       - name: Run inference
         run: |
-          python inference.py "${{ github.event.inputs.text }}"
+          python test_inference.py "${{ github.event.inputs.text }}"
