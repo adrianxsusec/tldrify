@@ -5,6 +5,7 @@ on:
       text:
         description: 'Input text'
         required: true
+        default: "What is the cause of flight BA41's engine malfunction?"
 
 jobs:
   inference:
@@ -24,4 +25,4 @@ jobs:
 
       - name: Run inference
         run: |
-          python test_inference.py "${{ github.event.inputs.text }}"
+          python inference.py "${{ github.event.inputs.text }}"
