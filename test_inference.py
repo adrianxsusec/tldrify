@@ -4,9 +4,15 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 text = sys.argv[1]
 
 model_name = "rishivijayvargiya/outputs-project-id2223"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name, legacy=False)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
 inputs = tokenizer(text, return_tensors="pt")
-outputs = model.generate(**inputs)
-print(tokenizer.decode(outputs[0]))
+outputs = model.generate(
+    **inputs,
+    max_new_tokens=100,  # Adjust this based on your needs
+    num_beams=4,
+    early_stopping=True
+)
+result = tokenizer.decode(outputs[0], skip_special_tokens=True)
+print(result)
