@@ -19,10 +19,8 @@ def fetch_and_store_articles():
     # before the query is made).
     # In each query, we get 50 news articles. We will ONLY consider the first 5 results for generating summaries.
 
-    # countries = {"India": "in", "Australia": "au", "USA": "us", "Nigeria": "ng", "UK": "gb"}
-    countries = {"India": "in"}
-    # categories = ['business', 'entertainment', 'technology', 'politics', 'sports']
-    categories = ['business']
+    countries = {"India": "in", "Australia": "au", "USA": "us", "Nigeria": "ng", "UK": "gb"}
+    categories = ['business', 'entertainment', 'technology', 'politics', 'sports']
 
     fetched_articles_df = []
 
