@@ -1,0 +1,3 @@
+This is a placeholder directory. The actual code for this inference program can be found in this HF Repository: https://huggingface.co/spaces/shallowunlearning/tldrify-ui/tree/main. This is done to ensure that there is a single source of truth when it comes to the code associated with the HuggingFace Space for this project.
+
+For information about this space, please refer to the README.md file present at the root of this git repository: https://github.com/adrianxsusec/tldrify/blob/main/README.md
