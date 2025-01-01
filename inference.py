@@ -38,7 +38,7 @@ def summarize_and_push_articles_to_fs(fs, articles, model, tokenizer):
         print(f"\n{'=' * 100}w")
         print(f"Row {idx}")
         print(f"\nSUMMARY:\n{row['summary']}")
-        print(f"\nCONTENT:\n{row['content']}")
+        print(f"\nCONTENT LENGTH:\n{len(row['content'])}")
         print(f"\n{'=' * 100}")
 
     news_articles_hopsworks = fs.get_or_create_feature_group(
