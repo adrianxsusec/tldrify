@@ -1,13 +1,11 @@
-name: T5 Inference
+name: Daily Articles Summary
 on:
   workflow_dispatch:
-    inputs:
-      text:
-        description: 'Input text'
-        required: true
+  # schedule:
+  #   - cron: '11 17 * * *'
 
 jobs:
-  inference:
+  create-summary:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,6 +22,8 @@ jobs:
           pip cache purge
           pip install -r requirements.txt
 
-      - name: Run inference
+      - name: Fetch Daily News
+        env:
+          HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
         run: |
-          python test_inference.py "${{ github.event.inputs.text }}"
+          python inference.py

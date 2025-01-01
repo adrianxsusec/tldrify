@@ -17,9 +17,9 @@ def fetch_todays_articles(fs):
     news_articles_df = news_articles_hopsworks.read()
     news_articles_df['pubdate'] = pd.to_datetime(news_articles_df['pubdate']).dt.strftime(date_format)
     today = datetime.now(timezone.utc).strftime(date_format)
-    yesterday = (datetime.now(timezone.utc) - timedelta(days=1)).strftime(date_format)
+    # yesterday = (datetime.now(timezone.utc) - timedelta(days=1)).strftime(date_format)
 
-    mask = news_articles_df['pubdate'] == yesterday
+    mask = news_articles_df['pubdate'] == today
     return news_articles_df[mask]
 
 
@@ -41,16 +41,16 @@ def summarize_and_push_articles_to_fs(fs, articles, model, tokenizer):
         print(f"\nCONTENT:\n{row['content']}")
         print(f"\n{'=' * 100}")
 
-    # news_articles_hopsworks = fs.get_or_create_feature_group(
-    #     name="news_articles_summarized",
-    #     version=1,
-    #     primary_key=['article_id'],
-    #     description="Summarized articles from news_articles_raw"
-    # )
-    #
-    # print("------------- Inserting summarized articles -------------")
-    # news_articles_hopsworks.insert(articles)
-    # print("----------------- Successfully inserted DF Into Hopsworks! -------------------")
+    news_articles_hopsworks = fs.get_or_create_feature_group(
+        name="news_articles_summarized",
+        version=1,
+        primary_key=['article_id'],
+        description="Summarized articles from news_articles_raw"
+    )
+    
+    print("------------- Inserting summarized articles -------------")
+    news_articles_hopsworks.insert(articles)
+    print("----------------- Successfully inserted DF Into Hopsworks! -------------------")
 
 
 if __name__ == "__main__":
