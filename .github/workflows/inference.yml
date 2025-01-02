@@ -2,7 +2,7 @@ name: Daily Articles Summary
 on:
   workflow_dispatch:
   schedule:
-    - cron: '00 17 * * *'
+    - cron: '17 17 * * *'
 
 jobs:
   create-summary:
