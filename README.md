@@ -47,6 +47,12 @@ A thing to note: The HuggingFace space is restarted at around 6:20pm UTC everyda
 ## Demo
 The following is a demo of how the HuggingFace Space described above in action
 
+
+https://github.com/user-attachments/assets/9ff2c830-97cd-48d4-8a1a-e104010e7339
+
+
+
+
 ## Results
 Given the fact that we used our own fine-tuned model to create summaries instead of pre-built LLMs, we are **reasonably happy** with the results we have obtained. Of course, the summaries created by our fine-tuned LLM are not perfect, far from it. Some noticeable drawbacks seem to be that the model appears to get "stuck" in some instances. For instance, in the demo video above, a summary can be seen with successive `-` at the end of the summary. Another summary was noticed to have multiple occurrences of `£4` in the summary, even though it did not make sense in the context. It appears that the LLM is not able to get "out" of using such characters once it starts using them, which can create summaries that are not very informative. 
 
