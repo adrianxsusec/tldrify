@@ -69,13 +69,13 @@ The `T5_Finetuning_Summarization.ipynb` fine-tuning notebook can be run on Googl
 
 For the python code associated with the daily-feature-fetch, inference, and HF restart, we believe it would be best to fork this repository and then proceed. After the repository has been forked, to enable the execution of these things throguh GitHub itself, you would want to `Enable` the forked workflows in your forked repo. Additionally, since the workflows ran automatically at around the same time each day, you can comment out the 2-lines following `schedule` at the top of the yml file for each of these workflows (for eg: line 4-5 in [this](https://github.com/adrianxsusec/tldrify/blob/main/.github/workflows/feature.yml#L4) exmaple).
 
-
+<img width="1295" alt="allow_workflows" src="https://github.com/user-attachments/assets/83e798d7-98cb-4bcf-bfc5-678eeca8b108" />
 
 Then, if not being run automatically, the sequence of execution should be: `daily-feature-pipeline.py` --> `inference.py` --> `hf_space_restart.py`. However, to restart a HF space, we first need to get one! This should be possible by duplicating the HF Space: https://huggingface.co/spaces/shallowunlearning/tldrify-ui/tree/main (click on the "three dots", select `Duplicate this Space`). 
 
 Finally, we will need to add the correct serets to be able to run these files properly. 3 Secrets were used by for this project on GitHub: `HOPSWORKS_API_KEY`, `NEWSDATA_API_KEY`, and `HF_API_KEY`. On HF Spaces, only one secret was used: `HOPSWORKS_API_KEY`. After this, the thing that remains is changing the names so that they're consistent with your requirements. If you wish to use your own fine-tune model (which you obtained by using the notebook above, for instance) instead of the one used for this project by us, you should change the name of the model [here](https://github.com/adrianxsusec/tldrify/blob/main/inference.py#L61). Similarly, you should change the name of the HF Space you want to restart [here](https://github.com/adrianxsusec/tldrify/blob/main/hf_space_restart.py#L7). 
 
-So, the order of operations that seem to make the most sense to us are: `daily-feature-pipeline` --> `inference` --> `duplicate hf space` --> `code for restarting hf space`. 
+So, the order of work/set-up that seem to make the most sense to us are: `daily-feature-pipeline` --> `inference` --> `duplicate hf space` --> `code for restarting hf space`. 
 
 ## Future Work and Ideas
 We have alluded to some areas that could be worked on in the future at different points in the report. Here, we discuss briefly some of our suggestions
