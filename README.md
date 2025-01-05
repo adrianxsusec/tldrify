@@ -29,7 +29,15 @@ After fetching the news articles in this way, we do some pre-processing before s
 After pre-processing the fetched data as described above, we store the data-frame containing the news for the day in the Hopsworks feature group titled `news_articles_raw`: using the `article_id` as the primary key. The code-file responsible for these steps is `daily-feature-pipeline.py` and can be found in the root of this repository. The execution of the code in `daily-feature-pipeline.py` is automated with the help of Github actions, with the workflow file called `feature.yml` under `.github/workflows` doing the work.
 
 ## Daily Inference
-TODO: Write about the daily inference file and how/what we do, end with the brief description of the workflow file that we run to automate the task of generating summaries, and how that needs to run _after_ the articles of the day have been fetched (this is obvious, but would be good to point out)
+We have a daily-inference pipeline that reads the articles fetched for the day from NewsData.io (described in the previous section) and then uses our [fine-tuned LLM](https://huggingface.co/rishivijayvargiya/outputs-project-id2223) to try and generate summaries of the content of the news articles. 
+
+For doing this, we first read the contents of the `news_articles_raw` feature-group from Hopsworks. After this, we retrieve _today's_ news articles (based on the date-time in UTC when the code is executed), and only work with those articles that were published on the day when the pipeline is being run. For instance, if the pipeline is runnign on Jan 5th, then we will filter to retrieve all news articles in the `news_articles_raw` feature group that have Jan 5th as the `pubdate`. 
+
+After this, we use our model to obtain the summaries of the news articles for the day, and then store these summaries in a separate feature group -- `news_articles_summarized` -- in Hopsworks. This is the feature group from which information about news articles and the summaries of the articles are read in the HuggingFace space (the space is discussed in the next section). 
+
+To generate the summaries, we believe we use pretty standard arguments to the `tokenizer` (`truncation=True, max_length=1024, return_tensors="pt"`), `generate` (`max_length=150, min_length=40`), and `decode` (`skip_special_tokens=True`) functions of the tokenizer and model returned by the `AutoTokenizer` and the `AutoModelForSeq2SeqLM` classes, respectively. 
+
+The code for this can be found in the `inference.py` file in the root directory of the project. To autmoate the generation of the summaries, we use GitHub actions, where the workflow file `inference.yml` under `.github/workflows` runs this code on a daily basis. This is ran approximately 1 hour _after_ the ingestion of the news articles for the day (from the previous section).
 
 ## The Hugging Face Space
 To demonstrate the results of the summarization, we utilize a Gradio UI that is hosted on HuggingFace Spaces. The Gradio UI can be found at [this](https://huggingface.co/spaces/shallowunlearning/tldrify-ui) location. The UI allows users to filter news summaries based on the country in which the news was published, or the category of the news. Both these filtering options are displayed in separate tabs, and the users can click on check-boxes to specify their filtering criteria.
