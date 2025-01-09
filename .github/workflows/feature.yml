@@ -1,8 +1,8 @@
 name: NewsDataAPI Daily News Fetch
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '16 16 * * *'
+  # schedule:
+  #   - cron: '16 16 * * *'
 
 jobs:
   feature-fetch:
